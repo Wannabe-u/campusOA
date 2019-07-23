@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xtu.campusoa.dao.FileDao">
+	<insert id="insertFile" parameterType="ShareFile">
+		insert into file
+		values(#{fileId}, #{number}, now(), #{title}, #{fileType}, #{shareFileUrl}, #{shareFileName})
+	</insert>
+
+	<delete id="deleteFile">
+		delete from file 
+		<where>
+			<if test="fileId != null">and file_id = #{fileId}</if>
+			<if test="number != null">and number = #{number}</if>
+			<if test="title != null">and title = #{title}</if>
+			<if test="fileType != null">and file_type = #{fileType}</if>
+		</where>
+	</delete>
+	
+	<update id="updateFile">
+		UPDATE file
+		<set>
+			release_time = now()
+			<if test="title != null">,title = #{title}</if>
+			<if test="fileType != null">,file_type = #{fileType}</if>
+			<if test="shareFileName != null">,share_file_name = #{shareFileName}</if>
+		</set>
+		<where>
+			<if test="fileId != null">and file_id = #{fileId}</if>
+			<if test="number != null">and number = #{number}</if>
+		</where>
+	</update>
+	
+	<select id="selectFile" resultType="ShareFile">
+		select 
+			file_id,
+			number,
+			date_format(release_time, '%Y-%m-%d %H:%i') release_time,
+			title,
+			file_type,
+			share_file_name,
+			share_file_url
+		from file
+		<where>
+			<if test="fileId != null">and file_id = #{fileId}</if>
+			<if test="number != null">and number = #{number}</if>
+			<if test="releaseTime != null">and release_time like concat('%', #{releaseTime}, '%')</if>
+			<if test="title != null">and title like concat('%', #{title}, '%')</if>
+			<if test="fileType != null">and file_type = #{fileType}</if>
+			<if test="shareFileName != null">and share_file_name like concat('%', #{shareFileName}, '%')</if>
+		</where>
+		ORDER BY release_time DESC
+	</select>
+	
+</mapper>

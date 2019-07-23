@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xtu.campusoa.dao.MessageDao">
+	<insert id="insertMessage" parameterType="Message">
+		insert into message
+		values(#{messageId}, #{number}, now(), #{title}, #{content})
+	</insert>
+
+	<delete id="deleteMessage">
+		delete from message
+		<where>
+			<if test="messageId!=null">and message_id = #{messageId}</if>
+			<if test="number!=null">and number = #{number}</if>
+			<if test="title!=null">and title = #{title}</if>
+			<if test="content!=null">and content = #{content}</if>
+		</where>
+	</delete>
+
+	<update id="updateMessage">
+		update message 
+		<set>
+			release_time = now()
+			<if test="title!=null">,title = #{title}</if>
+			<if test="content!=null">,content = #{content}</if>
+		</set>
+		<where>
+			<if test="messageId!=null">and message_id = #{messageId}</if>
+			<if test="number!=null">and number = #{number}</if>
+		</where>
+	</update>
+	
+	<select id="selectMessage" resultType="Message">
+		SELECT 
+		    message_id,
+			number,
+			date_format(release_time, '%Y-%m-%d %H:%i') release_time,
+			title,
+			content
+		FROM
+		    message
+		<where>
+			<if test="messageId!=null">and message_id = #{messageId}</if>
+			<if test="number!=null">and number = #{number}</if>
+			<if test="title!=null">and title like concat('%', #{title}, '%')</if>
+			<if test="content!=null">and content = #{content}</if>
+		</where>
+		ORDER BY release_time DESC
+	</select>
+	
+</mapper>

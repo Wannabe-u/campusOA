@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xtu.campusoa.dao.OfficialDocumentDao">
+	<insert id="insertOfficialDocument">
+		INSERT INTO official_document
+		VALUES(#{documentId}, #{number}, #{title}, #{description}, #{superior}, 
+		#{boss}, now(), #{state}, #{fileUrl}, #{fileName}, #{superiorReply}, #{bossReply})
+	</insert>
+	
+	<delete id="deleteOfficialDocument">
+		DELETE FROM official_document
+		<where>
+			<if test="officialDocumentId!=null">and document_id = #{officialDocumentId}</if>
+			<if test="number!=null">and number = #{number}</if>
+			<if test="state!=null">and state = #{state}</if>
+		</where>
+	</delete>
+
+	<update id="updateOfficialDocument">
+		UPDATE official_document
+		<set>
+			<if test="state!=null">state = #{state},</if>
+			<if test="superiorReply!=null">superior_reply = #{superiorReply},</if>
+			<if test="bossReply!=null">boss_reply = #{bossReply},</if>
+		</set>
+		<where>
+			<if test="officialDocumentId!=null">and document_id = #{officialDocumentId}</if>
+			<if test="number!=null">and number = #{number}</if>
+		</where>
+	</update>
+	
+	<select id="selectOfficialDocument" resultType="OfficialDocument">
+		select
+			document_id,
+			number,
+			title,
+			description,
+			superior,
+			boss,
+			date_format(apply_time, '%Y-%m-%d %H:%i') apply_time,
+			state,
+			file_url,
+			file_name,
+			superior_reply,
+			boss_reply
+		from official_document
+		<where>
+			<if test="officialDocumentId!=null">and document_id = #{officialDocumentId}</if>
+			<if test="number!=null">and number = #{number}</if>
+			<if test="title!=null">and title = #{title}</if>
+			<if test="state!=null">and state = #{state}</if>
+		</where>
+		ORDER BY apply_time DESC
+	</select>
+	
+	<select id="selectUserAndOfficialDocument" resultType="UserAndOfficialDocument">
+		select
+			user_id,
+			document_id,
+			number,
+			real_name,
+			identity,
+			faculty,
+			department,
+			title,
+			description,
+			superior,
+			boss,
+			date_format(apply_time, '%Y-%m-%d %H:%i') apply_time,
+			state,
+			file_url,
+			file_name,
+			superior_reply,
+			boss_reply
+		from user natural join official_document
+		<where>
+			<if test="userId!=null">and user_id=#{userId}</if>
+			<if test="documentId!=null">and document_id=#{documentId}</if>
+			<if test="number!=null">and number = #{number}</if>
+			<if test="superior!=null">and superior=#{superior}</if>
+			<if test="boss!=null">and boss = #{boss}</if>
+			<if test="state!=null">and state = #{state}</if>
+			<if test="superiorReply!=null">and superior_reply=#{superiorReply}</if>
+			<if test="bossReply!=null">and boss_reply = #{bossReply}</if>
+		</where>
+		ORDER BY apply_time DESC
+	</select>
+	
+</mapper>

@@ -1,0 +1,76 @@
+@charset "UTF-8";
+
+* {
+	margin: 0px;
+	padding: 0px;            /*  去掉所有标签的marign和padding的值  */
+}
+ul {
+    list-style: none;           /*  去掉ul标签默认的点样式  */
+}
+a {
+	color: #333;
+	font-size: 20px;
+	font:bold;
+	text-decoration: none;     /* 超链接样式 */
+}
+a:hover {
+	color: #ff0000;
+}
+#main {
+	float: right;
+	width: 25%;
+	border: 2px solid #ababab;
+	-moz-border-radius: 15px;      /* Gecko browsers */
+	-webkit-border-radius: 15px;   /* Webkit browsers */
+    border-radius: 15px;
+    box-shadow: 2px 2px 10px #ababab;
+    text-align:left;
+	margin:auto 0px auto auto;               /* 让新闻内容靠左 */
+        }
+/*  头部样式 */
+#title1 {
+	margin-top:0px;
+	margin-bottom:0px;
+	height: 62px;
+	overflow: hidden;  /* 内容超出的部分要隐藏，免得撑高头部 */
+	font-size: 26px;
+	line-height: 62px;
+	padding-left: 30px;
+	background-image: -moz-linear-gradient(top, #f05e6f, #c9394a); /* Firefox */
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #2e4a52), color-stop(1, #2e4a52)); /* Saf4+, Chrome */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#8fa1ff', endColorstr='#f05e6f', GradientType='0'); /* IE*/
+	border: 1px solid #2e4a52;
+	-moz-border-radius: 8px 8px 0 0;      /* Gecko browsers */
+	-webkit-border-radius: 8px 8px 0 0;   /* Webkit browsers */
+	border-radius: 8px 8px 0 0;
+	box-shadow: 0 0 5px #408080 ;
+	color: #fff;
+	position: relative;
+	}
+#title1 a {
+	position: absolute;
+	right: 10px;
+	bottom: 10px;
+	display: inline;
+	color: #fff;
+	font-size: 12px;
+	line-height: 24px;
+	}
+#box {
+	height: 160px;
+	width: 85%;
+	margin-left: 25px;
+	margin-top: 10px;
+	overflow: hidden;    /* 超出的内容部分要隐藏，免得撑高中间部分 */
+	}
+#main ul li {
+	height: 24px;
+	}
+#main ul li a {
+	float: left;
+	text-indent: 15px;
+        }
+#main ul li span {
+	float: right;
+	color: #999;
+	}

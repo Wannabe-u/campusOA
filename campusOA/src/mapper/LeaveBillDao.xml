@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xtu.campusoa.dao.LeaveBillDao">
+	<insert id="insertLeaveBill">
+		INSERT INTO leave_bill
+		VALUES(#{leaveId}, #{number}, #{superior}, #{boss}, #{state}, #{startTime}, 
+		#{endTime}, #{applyReason}, #{superiorReplyReason}, #{bossReplyReason})
+	</insert>
+	
+	<delete id="deleteLeaveBill">
+		DELETE FROM leave_bill
+		<where>
+			<if test="leaveBillId!=null">and leave_id = #{leaveBillId}</if>
+			<if test="number!=null">and number = #{number}</if>
+			<if test="state!=null">and state = #{state}</if>
+		</where>
+	</delete>
+
+	<update id="updateLeaveBill">
+		UPDATE leave_bill
+		<set>
+			<if test="state!=null">state = #{state},</if>
+			<if test="superiorReplyReason!=null">superior_reply_reason = #{superiorReplyReason},</if>
+			<if test="bossReplyReason!=null">boss_reply_reason = #{bossReplyReason},</if>
+		</set>
+		<where>
+			<if test="leaveBillId!=null">and leave_id = #{leaveBillId}</if>
+			<if test="number!=null">and number = #{number}</if>
+		</where>
+	</update>
+	
+	<select id="selectLeaveBill" resultType="LeaveBill">
+		select * from leave_bill
+		<where>
+			<if test="leaveBillId!=null">and leave_id = #{leaveBillId}</if>
+			<if test="number!=null">and number = #{number}</if>
+			<if test="state!=null">and state = #{state}</if>
+		</where>
+		ORDER BY start_time DESC
+	</select>
+	
+	<select id="selectUserAndLeaveBill" resultType="UserAndLeaveBill">
+		select
+			user_id,
+			leave_id,
+			number,
+			real_name,
+			identity,
+			faculty,
+			department,
+			superior,
+			boss,
+			state,
+			date_format(start_time, '%Y-%m-%d %H:%i') start_time,
+			date_format(end_time, '%Y-%m-%d %H:%i') end_time,
+			apply_reason,
+			superior_reply_reason,
+			boss_reply_reason
+		from user natural join leave_bill
+		<where>
+			<if test="userId!=null">and user_id=#{userId}</if>
+			<if test="leaveBillId!=null">and leave_id=#{leaveBillId}</if>
+			<if test="number!=null">and number = #{number}</if>
+			<if test="superior!=null">and superior=#{superior}</if>
+			<if test="boss!=null">and boss = #{boss}</if>
+			<if test="state!=null">and state = #{state}</if>
+			<if test="superiorReply!=null">and superior_reply_reason=#{superiorReply}</if>
+			<if test="bossReply!=null">and boss_reply_reason = #{bossReply}</if>
+		</where>
+		ORDER BY start_time DESC
+	</select>
+</mapper>
