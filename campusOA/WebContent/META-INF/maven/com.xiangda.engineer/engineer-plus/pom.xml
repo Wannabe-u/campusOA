@@ -39,7 +39,7 @@
 		<jedis.version>2.9.0</jedis.version>
 
 		<!--jwt -->
-		<nimbus.jose.jwt.version>4.30</nimbus.jose.jwt.version>
+		<nimbus.jose.jwt.version>7.9</nimbus.jose.jwt.version>
 
 		<!-- swagger -->
 		<springfox-swagger.version>2.6.1</springfox-swagger.version>
