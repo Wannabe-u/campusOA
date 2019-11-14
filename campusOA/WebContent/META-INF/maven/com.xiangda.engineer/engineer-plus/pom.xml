@@ -19,7 +19,7 @@
 		<security.version>4.0.4.RELEASE</security.version>
 
 		<!--marshalling and unmarshalling -->
-		<jackson.version>2.4.0</jackson.version>
+		<jackson.version>2.9.10.1</jackson.version>
 		<jaxb-api.version>2.2.11</jaxb-api.version>
 
 		<!--mybatis -->
